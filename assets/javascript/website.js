@@ -31,18 +31,39 @@ $(document).ready(function() {
                     var h5 = $("<h5>").text("Rating: " + rating);
 
                     var initialImage = $("<img>");
+
                     initialImage.attr("src", results[i] .images.fixed_height_still.url);
+
+                    initialImage.attr("data-still", results[i].images.fixed_height_still.url); 
+
+                    initialImage.attr("data-animate", results[i].images.fixed_height.url);
+
+                    initialImage.attr("data-state", "still");
 
                     gifDiv.append(h5);
                     gifDiv.append(initialImage);
 
                     //Prepend gifs to HTML div
                     $("#gifs-appear-here").prepend(gifDiv);
+
+                    // on click, play or pause gifs
+                    $(initialImage).on("click", function(){
+                    var state = $(this).attr("data-state");
+
+                        if (state === "still") {
+                        $(this).attr("src", $(this).attr("data-animate"));
+                        $(this).attr("data-state", "animate")
+                        } else {
+                            $(this).attr("src", $(this).attr("data-still"));
+                            $(this).attr("data-state", "still");
+                        }
+                    });
+                    
                 };  
             };
         });
     });
-    // on click, play or pause gifs
+
 
     //search and push with input
 
